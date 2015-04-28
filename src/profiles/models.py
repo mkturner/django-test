@@ -4,7 +4,7 @@ from django.db import models
 
 class profile(models.Model):
 	name = models.CharField(max_length = 1200)
-	description = models.TextField(default='description default')
+	description = models.TextField(default = 'description default')
 
-def __unicode__(self):
-	return self.name
+	def __unicode__(self):
+		return self.name

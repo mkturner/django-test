@@ -1,0 +1,4 @@
+**/.python-version
+*.sublime-project
+*.sublime-workspace
+/src/profiles/migrations/*
