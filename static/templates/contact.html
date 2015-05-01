@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block page_title %}
 {{ block.super }}: {{ title }}
 {% endblock %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-
-{% if confirm_msg %}
-<div class="panel panel-success">
-	<div class="panel-heading"> {{ confirm_msg }} </div>
-	<div class="panel-body">Your message has been sent!</div>
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+		<h1>{{ title }}</h1>
+		
+		{% if confirm_msg %}
+		<div class="panel panel-success">
+			<div class="panel-heading"> {{ confirm_msg }} </div>
+			<div class="panel-body">Your message has been sent!</div>
+		</div>
+		{% endif %}
+		
+		{% if form %}
+		<form method='POST' action=''> {% csrf_token %}
+			{{ form|crispy }}
+			<input type="submit" value="Submit Form" class="btn btn-default">
+		</form>
+		{% endif %}
+	</div>
 </div>
-{% endif %}
-
-{% if form %}
-<form method='POST' action=''> {% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="Submit Form" class="btn btn-default">
-</form>
-{% endif %}
 {% endblock %}

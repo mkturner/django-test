@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'profiles',
+    'crispy_forms',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,3 +98,5 @@ if DEBUG:
     STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "static-only")
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "media")
     STATICFILES_DIRS = (os.path.join(os.path.dirname(BASE_DIR), "static", "static"),)
+
+    CRISPY_TEMPLATE_PACK = 'bootstrap3'
