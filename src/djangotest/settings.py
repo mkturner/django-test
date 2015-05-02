@@ -7,15 +7,16 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
+import secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'marvin.k.turner@gmail.com'
-EMAIL_HOST_PASSWORD = 'jnhysamcccbjttrk'
+EMAIL_HOST = secrets.email_host
+EMAIL_HOST_USER = secrets.email_host_user
+EMAIL_HOST_PASSWORD = secrets.email_host_password
 EMAIL_PORT = '587'
 EMAIL_USE_TLS = True
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'stripe',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,6 +119,7 @@ TEMPLAT_CONTEXT_PROCESSORS = (
 "django.core.context_processors.request",
 "allauth.account.context_processors.account",
 "allauth.socialaccount.context_processors.socialaccount",
+"django.core.context_processors.csrf",
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -158,3 +161,8 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = False
 ACCOUNT_PASSWORD_MIN_LENGTH = 6
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
+# stripe stuff
+STRIPE_PUBLISHABLE_KEY = secrets.test_publishable_key
+STRIPE_SECRET_KEY = secrets.test_secret_key
+
