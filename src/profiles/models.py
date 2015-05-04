@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from allauth.account.signals import user_logged_in, user_signed_up
+import stripe
 
 # Create your models here.
 
@@ -24,9 +25,15 @@ class userStripe(models.Model):
 			return self.user.username
 
 def stripe_callback(sender, request, user, **kwargs):
-    idStripe, created = userStripe.objects.get_or_create(user = user)
+    user_stripe_account, created = userStripe.objects.get_or_create(user = user)
     if created:
     	print 'created for %s'%(user.username)
+
+    if user_stripe_account.stripe_id is None or user_stripe_account.stripe_id == '':
+    	new_stripe_id = stripe.Customer.create(email = user.email)
+    	user_stripe_account.stripe_id = new_stripe_id['id']
+    	user_stripe_account.save()
+
 
 def profile_callback(sender, request, user, **kwargs):
     userProfile, isCreated = profile.objects.get_or_create(user = user)
@@ -34,5 +41,6 @@ def profile_callback(sender, request, user, **kwargs):
     	userProfile.name = user.username
     	userProfile.save()
 
-user_logged_in.connect(stripe_callback)
 user_signed_up.connect(profile_callback)
+user_signed_up.connect(stripe_callback)
+user_logged_in.connect(stripe_callback)
